@@ -18,7 +18,7 @@ class botohelper:
 
     def start(self,fgh):
         try:
-            response = client.start_instances(InstanceIds=[fgh], DryRun=False)
+            response = client.start_instances(InstanceIds=[instance_id], DryRun=False)
         except ClientError as e:
             print(e)
             if 'DryRunOperation' not in str(e):
@@ -41,7 +41,7 @@ class botohelper:
 
     def stop(self, lol1):
         try:
-            response = client.stop_instances(InstanceIds=[lol1], DryRun=False)
+            response = client.stop_instances(InstanceIds=[instance_id], DryRun=False)
         except ClientError as e:
             print(e)
             if 'DryRunOperation' not in str(e):
@@ -49,7 +49,7 @@ class botohelper:
 
     def terminate(self, lol):
         try:
-            response = client.terminate_instances(InstanceIds =[lol], DryRun=False)
+            response = client.terminate_instances(InstanceIds =[instance_id], DryRun=False)
         except ClientError as e:
             print(e)
             if 'DryRunOperation' not in str(e):
@@ -77,11 +77,11 @@ def error(bot, update, error):
 def message(bot, update):
     print('Received an update')
     global context
-    conversation = ConversationV1(username='USERNAME',  # TODO
-                                  password='PWD',  # TODO
+    conversation = ConversationV1(username='<username>',  # TODO
+                                  password='<password>',  # TODO
                                   version='2018-02-16')
     response = conversation.message(
-        workspace_id='workspace_ID',
+        workspace_id='db32ebfa-5804-4867-a5fe-0e0932d69f7d',
         input={'text': update.message.text},
         context=context)
     print(json.dumps(response, indent=2))
@@ -177,13 +177,13 @@ def message(bot, update):
 def showa(bot,update):
     for i in range(len(arr)):
         bla, bee = arr[i][0], arr[i][1]
-        if(bee!='terminated'):
+        if bee!='terminated':
             bot.send_message(chat_id=abcdef, text=bla + ' : ' + bee)
 
 
 def main():
     global updater
-    updater = Updater("BOT_TOKEN")
+    updater = Updater("883986360:AAFLgCik1EF_HIhgHPu52vBayQljEQKWMEs")
     global dp
     dp = updater.dispatcher
     updater.dispatcher.add_handler(CommandHandler('launch', start))
@@ -191,6 +191,7 @@ def main():
     dp.add_handler(MessageHandler(Filters.text, message))
     updater.start_polling()
     updater.idle()
+
 
 if __name__ == '__main__':
     main()
